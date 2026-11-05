@@ -46,8 +46,8 @@ Properties (G1)–(G3), checked on the same grid:
 
 **Verdict:** reproduced. The Richardson-extrapolated generator limit matches
 the analytical G-BS generating function to within 0.1% on average (worst case
-0.23%), confirming that local information about `G` can be recovered from the
-global valuation rule `T` through the generator limit, and properties
+0.136%), confirming that local information about `G` can be recovered from
+the global valuation rule `T` through the generator limit, and properties
 (G1)–(G3) hold numerically exactly as the paper states for the G-BS case.
 
 ## exp_2 — Support sets via convex duality
