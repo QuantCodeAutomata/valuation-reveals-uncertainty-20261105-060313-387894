@@ -1,0 +1,141 @@
+{
+  "config": {
+    "n_steps": 250,
+    "n_paths": 20000,
+    "pde_n_x": 600,
+    "pde_n_t": 400,
+    "maturity": 1.0,
+    "sigma_low": 0.15,
+    "sigma_high": 0.35,
+    "full": false
+  },
+  "records": [
+    {
+      "K": 80.0,
+      "kind": "put",
+      "mc_best_mean": 4.908260164285337,
+      "mc_best_std_error": 0.06646874172601945,
+      "mc_best_type": "constant",
+      "pde_value": 4.921556073959359,
+      "analytic_bs_high_vol": 4.923672778380851,
+      "analytic_bs_low_vol": 0.40359934784637286,
+      "abs_error_mc_vs_pde": 0.01329590967402261,
+      "abs_error_pde_vs_analytic_high": 0.0021167044214918107
+    },
+    {
+      "K": 80.0,
+      "kind": "call",
+      "mc_best_mean": 24.965384791114733,
+      "mc_best_std_error": 0.2192366613105516,
+      "mc_best_type": "constant",
+      "pde_value": 24.921556073959877,
+      "analytic_bs_high_vol": 24.923672778380855,
+      "analytic_bs_low_vol": 20.40359934784638,
+      "abs_error_mc_vs_pde": 0.04382871715485592,
+      "abs_error_pde_vs_analytic_high": 0.0021167044209775554
+    },
+    {
+      "K": 90.0,
+      "kind": "put",
+      "mc_best_mean": 8.767782880665326,
+      "mc_best_std_error": 0.09224512129652043,
+      "mc_best_type": "constant",
+      "pde_value": 8.780277161548891,
+      "analytic_bs_high_vol": 8.784217716370161,
+      "analytic_bs_low_vol": 2.0217274256477644,
+      "abs_error_mc_vs_pde": 0.012494280883565523,
+      "abs_error_pde_vs_analytic_high": 0.0039405548212698704
+    },
+    {
+      "K": 90.0,
+      "kind": "call",
+      "mc_best_mean": 18.824907507494725,
+      "mc_best_std_error": 0.19930387621525156,
+      "mc_best_type": "constant",
+      "pde_value": 18.780277161549236,
+      "analytic_bs_high_vol": 18.784217716370165,
+      "analytic_bs_low_vol": 12.021727425647768,
+      "abs_error_mc_vs_pde": 0.04463034594548887,
+      "abs_error_pde_vs_analytic_high": 0.00394055482092881
+    },
+    {
+      "K": 100.0,
+      "kind": "put",
+      "mc_best_mean": 13.865967787576501,
+      "mc_best_std_error": 0.11813138436568973,
+      "mc_best_type": "constant",
+      "pde_value": 13.88729129806615,
+      "analytic_bs_high_vol": 13.89203664153473,
+      "analytic_bs_low_vol": 5.978528810578943,
+      "abs_error_mc_vs_pde": 0.021323510489649422,
+      "abs_error_pde_vs_analytic_high": 0.004745343468579577
+    },
+    {
+      "K": 100.0,
+      "kind": "call",
+      "mc_best_mean": 13.923092414405902,
+      "mc_best_std_error": 0.17741400336656493,
+      "mc_best_type": "constant",
+      "pde_value": 13.88729129806629,
+      "analytic_bs_high_vol": 13.89203664153473,
+      "analytic_bs_low_vol": 5.978528810578943,
+      "abs_error_mc_vs_pde": 0.035801116339612804,
+      "abs_error_pde_vs_analytic_high": 0.004745343468441021
+    },
+    {
+      "K": 110.0,
+      "kind": "put",
+      "mc_best_mean": 20.079355441546173,
+      "mc_best_std_error": 0.1424619584013515,
+      "mc_best_type": "constant",
+      "pde_value": 20.113752114240405,
+      "analytic_bs_high_vol": 20.118192116976672,
+      "analytic_bs_low_vol": 12.500244806693075,
+      "abs_error_mc_vs_pde": 0.03439667269423197,
+      "abs_error_pde_vs_analytic_high": 0.00444000273626699
+    },
+    {
+      "K": 110.0,
+      "kind": "call",
+      "mc_best_mean": 10.136480068375569,
+      "mc_best_std_error": 0.1552019956102743,
+      "mc_best_type": "constant",
+      "pde_value": 10.11375211424037,
+      "analytic_bs_high_vol": 10.118192116976672,
+      "analytic_bs_low_vol": 2.5002448066930683,
+      "abs_error_mc_vs_pde": 0.022727954135199013,
+      "abs_error_pde_vs_analytic_high": 0.004440002736302517
+    },
+    {
+      "K": 120.0,
+      "kind": "put",
+      "mc_best_mean": 27.228467297935307,
+      "mc_best_std_error": 0.16422365343620898,
+      "mc_best_type": "constant",
+      "pde_value": 27.278068386646115,
+      "analytic_bs_high_vol": 27.281405995416485,
+      "analytic_bs_low_vol": 20.891275925792115,
+      "abs_error_mc_vs_pde": 0.04960108871080848,
+      "abs_error_pde_vs_analytic_high": 0.0033376087703693713
+    },
+    {
+      "K": 120.0,
+      "kind": "call",
+      "mc_best_mean": 7.285591924764705,
+      "mc_best_std_error": 0.13390111709755947,
+      "mc_best_type": "constant",
+      "pde_value": 7.278068386645901,
+      "analytic_bs_high_vol": 7.281405995416481,
+      "analytic_bs_low_vol": 0.891275925792101,
+      "abs_error_mc_vs_pde": 0.007523538118803685,
+      "abs_error_pde_vs_analytic_high": 0.0033376087705798696
+    }
+  ],
+  "mean_abs_error_mc_vs_pde": 0.02856231341462383,
+  "mean_abs_error_pde_vs_analytic_high": 0.0037160428435207395,
+  "lyapunov_condition": {
+    "holds": true,
+    "max_violation": 7.275957614183426e-12,
+    "C_used": 0.12249999999999998
+  }
+}
