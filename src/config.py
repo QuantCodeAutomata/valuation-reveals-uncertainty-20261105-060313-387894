@@ -19,7 +19,7 @@ EXP1_N_X_PAPER = 2000          # spatial grid points for the PDE solve (paper re
 EXP1_N_X_RUN = 800             # reduced grid used for the executed run to keep total runtime bounded
 EXP1_T_VALUES = [0.004, 0.002, 0.001, 0.0005]  # sequence of small maturities t_n -> 0 for the generator limit; not specified in the paper
 EXP1_STEPS_PER_SOLVE = 20       # implicit time steps per PDE solve; not specified in the paper
-EXP1_BUMP_WIDTH_FACTOR = 0.1    # test-function cutoff width w = factor * x0 (paper's implementation notes suggest w ~ 0.1*x0)
+EXP1_BUMP_WIDTH_FACTOR = 0.1    # test-function cutoff width w = factor * x0; not specified in the paper, chosen so w << x0
 EXP1_TEST_POINTS_X0 = [80.0, 100.0, 130.0]  # test points x0 in D; not specified in the paper
 EXP1_TARGET_TRIPLES = [  # (r, p, H) targets for the generator limit; not specified in the paper
     (0.0, 0.0, 1.0),
