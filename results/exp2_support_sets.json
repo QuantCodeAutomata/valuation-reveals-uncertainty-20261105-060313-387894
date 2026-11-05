@@ -1,10 +1,10 @@
 {
   "config": {
     "w_grid_bound": 10.0,
-    "w_grid_points_per_axis": 15,
+    "w_grid_points_per_axis": 50,
     "sigma_low": 0.15,
     "sigma_high": 0.35,
-    "full": false
+    "full": true
   },
   "analytic_support_sets": [
     {
@@ -49,9 +49,9 @@
       "sigma_min": 225.0,
       "C_at_min": 0.0,
       "B_at_min": -0.0,
-      "sigma_max": 1225.0,
+      "sigma_max": 1224.9999999999998,
       "C_at_max": 0.0,
-      "B_at_max": -0.0
+      "B_at_max": -1.4204938455953376e-15
     },
     {
       "x": 130.0,
@@ -59,7 +59,7 @@
       "sigma_min": 380.24999999999994,
       "C_at_min": 0.0,
       "B_at_min": -0.0,
-      "sigma_max": 2070.25,
+      "sigma_max": 2070.2499999999995,
       "C_at_max": 0.0,
       "B_at_max": -0.0
     }
@@ -175,5 +175,5 @@
     }
   ],
   "max_dual_abs_error": 0.0,
-  "max_lp_vs_analytic_abs_error": 4.547473508864641e-13
+  "max_lp_vs_analytic_abs_error": 5.684341886080802e-14
 }

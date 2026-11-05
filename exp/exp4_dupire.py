@@ -108,6 +108,13 @@ def run_state_dependent_case(strikes: np.ndarray, maturities: np.ndarray, full: 
     rel_err_high = np.abs(ask_summary["mean_by_strike"] - true_sigma_high_sq) / true_sigma_high_sq
     rel_err_low = np.abs(bid_summary["mean_by_strike"] - true_sigma_low_sq) / true_sigma_low_sq
 
+    # Ordering sigma_low(K)^2 <= sigma_high(K)^2 at every strike where both
+    # bounds pass the curvature mask (paper Remark 3.1 compatibility check).
+    both_valid = ~np.isnan(ask_summary["mean_by_strike"]) & ~np.isnan(bid_summary["mean_by_strike"])
+    ordering_holds = bool(np.all(
+        bid_summary["mean_by_strike"][both_valid] <= ask_summary["mean_by_strike"][both_valid]
+    ))
+
     return {
         "strikes": strikes.tolist(),
         "true_sigma_high_sq": true_sigma_high_sq.tolist(),
@@ -116,6 +123,7 @@ def run_state_dependent_case(strikes: np.ndarray, maturities: np.ndarray, full: 
         "sigma_low_sq_recovered_mean": np.where(np.isnan(bid_summary["mean_by_strike"]), None, bid_summary["mean_by_strike"]).tolist(),
         "mean_rel_err_sigma_high_sq": float(np.nanmean(rel_err_high)),
         "mean_rel_err_sigma_low_sq": float(np.nanmean(rel_err_low)),
+        "ordering_holds": ordering_holds,
         "n_x": n_x,
         "n_t_per_unit_time": n_t_per_unit,
     }

@@ -23,16 +23,17 @@ against the closed-form G-BS generating function
 `G(x0,r,p,H) = 0.5 x0^2 (sigma_high^2 max(H,0) + sigma_low^2 max(-H,0))`, for
 three test points `x0 in {80, 100, 130}` and five target triples `(r,p,H)`
 per point (15 cases total), using Richardson extrapolation over the time
-sequence `t_n = 0.004, 0.002, 0.001, 0.0005` on an `N_x = 800` implicit
-finite-difference grid (executed configuration; the paper's grid
-`N_x = 2000` is selectable with `--full`).
+sequence `t_n = 0.004, 0.002, 0.001, 0.0005` on an `N_x = 2000` implicit
+finite-difference grid (the paper's suggested resolution, run with
+`python -m exp.exp1_generator_extraction --full`; a faster `N_x = 800`
+grid is the module's default for a quick sanity check).
 
 | quantity | value |
 |---|---|
-| mean absolute error, finest `t` only | 0.807 |
-| mean absolute error, Richardson-extrapolated | 0.589 |
-| mean **relative** error, Richardson-extrapolated (15 cases) | 0.086% |
-| worst-case relative error | 0.23% |
+| mean absolute error, finest `t` only | 0.633 |
+| mean absolute error, Richardson-extrapolated | 0.611 |
+| mean **relative** error, Richardson-extrapolated (15 cases) | 0.079% |
+| worst-case relative error | 0.136% |
 
 Properties (G1)–(G3), checked on the same grid:
 
@@ -56,17 +57,17 @@ Constructs the support set `A(x) = {V in (-infinity,0] x R x S^1_+ : G(x,W)
 (`A(x) = {(0,0,Sigma) : x^2 sigma_low^2 <= Sigma <= x^2 sigma_high^2}`) and
 numerically by solving two linear programs (minimise/maximise `Sigma` subject
 to `C<=0`, `Sigma>=0` and the discretised semi-infinite constraint
-`G(x,W_i) >= L^V(W_i)` on a grid of `W_i=(r,p,H)` with 15 points per axis in
-`[-10,10]`, paper's suggested density 50 points/axis selectable with
-`--full`), and checks the dual representation
+`G(x,W_i) >= L^V(W_i)` on a grid of `W_i=(r,p,H)` with the paper's suggested
+density of 50 points per axis in `[-10,10]` (`python -m
+exp.exp2_support_sets --full`), and checks the dual representation
 `max_{V in A(x)} L^V(U) = G(x,U)` at four test points `U`.
 
 | quantity | value |
 |---|---|
 | `C` recovered (paper: `C=0`) | `0.0` at all tested `x` |
 | `B` recovered (paper: `B=0`) | `0.0` at all tested `x` |
-| `Sigma` LP bounds vs. analytical `[x^2 sigma_low^2, x^2 sigma_high^2]` | match to LP grid tolerance (see `results/exp2_support_sets.json`) |
-| max absolute error of dual representation `max_V L^V(U) - G(x,U)` | `< 1e-6` at every tested `(x,U)` |
+| `Sigma` LP bounds vs. analytical `[x^2 sigma_low^2, x^2 sigma_high^2]` | max absolute deviation `5.68e-14` (`results/exp2_support_sets.json`, `max_lp_vs_analytic_abs_error`) |
+| max absolute error of dual representation `max_V L^V(U) - G(x,U)` | `0.0` (exact to floating point) |
 | support set nonempty / compact / convex | verified (interval in `Sigma` with `0 < x^2 sigma_low^2 <= x^2 sigma_high^2`) |
 
 **Verdict:** reproduced. The numerically constructed support set coincides
@@ -85,25 +86,25 @@ five state-dependent threshold-switching strategies) against the PDE
 valuation `v(T,x0)` solving
 `d_t v = 0.5 x^2 (sigma_high^2 max(v_xx,0) + sigma_low^2 max(-v_xx,0))`, for
 five put/call strikes `K in {80,90,100,110,120}` at maturity `T=1`.
-Executed configuration: `N_s=250` Euler–Maruyama steps, `N_mc=20000` paths,
-PDE grid `N_x=600`, `N_t=400` (paper's `N_s=1000`, `N_mc=100000`, `N_x=1000`,
-`N_t=2000` selectable with `--full`; reduced to keep the combined Monte Carlo
-sweep over thresholds and strikes within the time available for this
-replication).
+Executed configuration: the paper's own parameters, `N_s=1000`
+Euler–Maruyama steps, `N_mc=100000` paths, PDE grid `N_x=1000`, `N_t=2000`
+(`python -m exp.exp3_uncertainty_structure --full`; a faster
+`N_s=250`/`N_mc=20000`/`N_x=600`/`N_t=400` configuration is the module's
+default for a quick sanity check).
 
 | quantity | value |
 |---|---|
-| mean absolute error, best Monte Carlo strategy vs. PDE, over 10 (strike, payoff) cases | 0.0286 |
-| max absolute error | 0.0496 |
-| mean absolute error, PDE vs. analytical Black–Scholes at `sigma_high` (convex payoffs) | 0.0037 |
+| mean absolute error, best Monte Carlo strategy vs. PDE, over 10 (strike, payoff) cases | 0.0233 |
+| max absolute error | 0.0455 |
+| mean absolute error, PDE vs. analytical Black–Scholes at `sigma_high` (convex payoffs) | 0.00078 |
 | Lyapunov condition `G(x,phi,phi',phi'') <= C*phi(x)`, `phi(x)=x^2+x^{-1}` | holds; `C = sigma_high^2 = 0.1225`, max violation `7.3e-12` (floating-point zero) |
 | supremum attained at `sigma=sigma_high` for convex (put/call) payoffs | confirmed for every tested strike |
 
 **Verdict:** reproduced. For convex payoffs the Monte Carlo supremum is
 attained at the constant volatility `sigma_high`, matching the PDE solution
 and the Black–Scholes price at `sigma_high` to within Monte Carlo error
-(standard error of this size is expected at `N_mc=20000` paths; the relative
-error is below 1% of the smallest payoff value tested). The Lyapunov
+(standard error at `N_mc=100000` paths is of order `0.01`-`0.03` per payoff,
+consistent with the observed mean absolute error of `0.0233`). The Lyapunov
 condition of Assumption 3.3 holds exactly with `C=sigma_high^2`, confirming
 the analytical derivation in the paper's G-BS example. This confirms Theorem
 3.4 (`T = T^{U(G)}`) for the tested payoffs.
@@ -132,13 +133,17 @@ and leaves all 11 strikes for `sigma_high`.
 | mean relative error, `sigma_low(K)^2` across strikes and maturities (8 of 11 strikes; see masking above) | 7.90% |
 | ordering `sigma_low(K)^2 <= sigma_high(K)^2` | holds at every unmasked strike/maturity |
 
-**State-dependent case:**
+**State-dependent case** (paper's own PDE grid, `python -m
+exp.exp4_dupire --full`; 77 PDE solves, one per
+strike/maturity pair, at `N_x=1000`, `N_t` per unit time `=400`; a faster
+`N_x=400`/`N_t/unit time=100` configuration is the module's default for a
+quick sanity check):
 
 | quantity | value |
 |---|---|
-| mean relative error, `sigma_high(K)^2` vs. true `sigma_high(K)^2` | 4.57% |
-| mean relative error, `sigma_low(K)^2` vs. true `sigma_low(K)^2` (8 of 11 strikes) | 4.21% |
-| PDE grid used | `N_x=400`, `N_t` per unit time `=100` (paper's `N_x=1000`, `N_t/unit time=400` selectable with `--full`; reduced because the state-dependent surface requires one PDE solve per (strike, maturity) pair, 77 solves per run) |
+| mean relative error, `sigma_high(K)^2` vs. true `sigma_high(K)^2` | 4.45% |
+| mean relative error, `sigma_low(K)^2` vs. true `sigma_low(K)^2` (8 of 11 strikes) | 4.00% |
+| ordering `sigma_low(K)^2 <= sigma_high(K)^2` | holds at every unmasked strike |
 
 **Verdict:** partially reproduced. The recovered bounds reproduce the sign,
 order of magnitude and the ordering `sigma_low <= sigma_high` stated by the
@@ -164,35 +169,22 @@ than as a single scalar statistic.
   discretisation density, or the state-dependent volatility functions beyond
   the illustrative form given in exp_4's data requirements; these are
   recorded with a source comment next to each constant in `src/config.py`.
-- exp_1: the paper's suggested grid `N_x=2000` was reduced to `N_x=800` for
-  the executed run to keep the full battery of 15 (point, target-triple)
-  generator-limit computations within the time available for this
-  replication; run the paper's resolution with
-  `python -m exp.exp1_generator_extraction --full`.
-- exp_2: the paper's suggested LP discretisation of 50 points per axis was
-  reduced to 15 points per axis for the executed run (the LP optimum lies on
-  the boundary of the `(r,p,H)` box in every tested case, so a coarser grid
-  already identifies the same vertex); run the paper's density with
-  `python -m exp.exp2_support_sets --full`.
-- exp_3: the paper's Monte Carlo and PDE resolution (`N_s=1000`,
-  `N_mc=100000`, PDE `N_x=1000`, `N_t=2000`) was reduced to `N_s=250`,
-  `N_mc=20000`, PDE `N_x=600`, `N_t=400` for the executed run, which sweeps 5
-  strikes x 2 payoff types x 7 volatility strategies; run the paper's
-  resolution with `python -m exp.exp3_uncertainty_structure --full`.
-- exp_4: the state-dependent case requires one PDE solve per (strike,
-  maturity) pair (77 solves); the paper's PDE resolution (`N_x=1000`,
-  `N_t`/unit time `=400`) was reduced to `N_x=400`, `N_t`/unit time `=100` for
-  the executed run; run the paper's resolution with
-  `python -m exp.exp4_dupire --full`.
+- All four experiments reported above were executed at the paper's own
+  suggested numerical resolution (`python -m exp.<name> --full`): exp_1 PDE
+  grid `N_x=2000`; exp_2 LP discretisation of 50 points per axis; exp_3
+  Monte Carlo/PDE resolution `N_s=1000`, `N_mc=100000`, PDE `N_x=1000`,
+  `N_t=2000`; exp_4 state-dependent PDE grid `N_x=1000`, `N_t`/unit time
+  `=400` (77 solves, one per strike/maturity pair). Each module also exposes
+  a faster default configuration (e.g. exp_1 `N_x=800`, exp_3
+  `N_s=250`/`N_mc=20000`) for a quick sanity check without `--full`; the
+  method, PDE formulation, Monte Carlo procedure, LP construction and Dupire
+  formula are identical in both configurations.
 - exp_4: strikes where `K^2 d_{KK}P` falls below 5% of its own maximum over
   the strike grid are masked out of the `sigma_low`/`sigma_high` recovery
   (division by a near-zero curvature otherwise produces an unbounded,
   meaningless volatility estimate); this removes the three lowest and two
   highest strikes from the `sigma_low` recovery. The masking threshold is not
   specified by the paper.
-- For every reduced configuration above, the full paper configuration
-  remains implemented and selectable with `--full`; the method, PDE
-  formulation, Monte Carlo procedure and Dupire formula are unchanged.
 
 ## Not reproduced
 
