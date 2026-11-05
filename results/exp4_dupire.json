@@ -164,8 +164,8 @@
     ],
     "mean_rel_err_sigma_high_sq": 0.04451563662496032,
     "mean_rel_err_sigma_low_sq": 0.04000515438664796,
+    "ordering_holds": true,
     "n_x": 1000,
-    "n_t_per_unit_time": 400,
-    "ordering_holds": true
+    "n_t_per_unit_time": 400
   }
 }
